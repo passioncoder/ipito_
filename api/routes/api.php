@@ -15,13 +15,16 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
+Route::middleware('auth')->group(function() {
 
-Route::resources([
-    'posts' => \App\Http\Controllers\PostController::class,
-]);
+    Route::get('/user', function (Request $request) {
+        return $request->user();
+    });
+
+    Route::resources([
+        'posts' => \App\Http\Controllers\PostController::class,
+    ]);
+});
 
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
